@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.widget.GridLayout;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,15 +14,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    // declare "custom_cell_layout" and "grid"
+        // add cells
+        GridLayout grid = findViewById(R.id.gridLayout01);
+        LayoutInflater li = LayoutInflater.from(this);
 
-    // add cells
-    GridLayout grid = (GridLayout) findViewById(R.id.gridLayout01);
-    LayoutInflater li = LayoutInflater.from(this);
-        for (int i = 4; i <= 5; ++i){
-            for (int j = 0; j <= 1; ++j) {
+        for (int i = 0; i <= 9; ++i){
+            for (int j = 0; j <= 7; ++j) {
                 TextView tv = (TextView) li.inflate(R.layout.custom_cell_layout, grid, false);
 
                 tv.setOnClickListener(this::onClickTV);
@@ -32,5 +31,9 @@ public class MainActivity extends AppCompatActivity {
                 grid.addView(tv, lp);
             }
         }
+    }
+
+    protected void onClickTV(View view){
+        System.out.println("Hello world!");
     }
 }
