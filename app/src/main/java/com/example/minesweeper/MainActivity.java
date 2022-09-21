@@ -196,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             revealed[i][j] = true;
             TextView tv = tiles[i][j];
             if (bombs[i][j]) {
-                tv.setBackgroundColor(Color.GRAY);
+                tv.setBackgroundColor(Color.LTGRAY);
                 tv.setText(MINE);
                 if (!gameOver) {
                     gameOver = true;
@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 int adj = adjs[i][j];
                 tv.setText(((Integer) adj).toString());
+                tv.setBackgroundColor(Color.LTGRAY);
                 if(!gameOver){
                     revealedNum++; // don't increment when the player has lost
                 }
