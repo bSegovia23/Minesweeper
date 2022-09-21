@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/victory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Used 12 secs.\nYou won.\nGood job!"
+        android:textSize="16pt" />
+
+    <Button
+        android:id="@+id/newGame"
+        android:layout_width="64pt"
+        android:layout_height="32pt"
+        android:layout_marginTop="500dp"
+        android:layout_centerHorizontal="true"
+        android:text="PLAY AGAIN"/>
+
+</RelativeLayout>

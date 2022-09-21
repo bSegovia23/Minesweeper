@@ -2,17 +2,15 @@ package com.example.minesweeper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.view.View;
 import android.widget.TextView;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
     int[][] adjs = new int[NUM_ROWS][NUM_COLS]; // how many adjacent bombs?
     TextView[][] tiles = new TextView[NUM_ROWS][NUM_COLS];
 
+    int revealedNum;
+
     boolean gameOver;
+    boolean playerWon;
 
 
     @Override
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         Integer num_bombs = 0;
         Integer rand_i = 0;
         Integer rand_j = 0;
+        int revealedNum = 0;
 
         // fill in bombs
         while(num_bombs != 4){
@@ -114,10 +116,19 @@ public class MainActivity extends AppCompatActivity {
         // set up button
         Button mode = findViewById(R.id.mode);
         mode.setOnClickListener(this::onClickPick);
+
+        // start the timer!
+        runTimer();
     }
 
     protected void onClickTile(TextView tv, Integer i, Integer j){
-        if(!gameOver){
+        if(gameOver) {
+            Intent intent = new Intent(this, ResultPage.class);
+            intent.putExtra("time", time);
+            intent.putExtra("won", playerWon);
+            startActivity(intent);
+        }
+        else{
             if(flagging) {
                 if(!flagged[i][j] && flags > 0){
                     flagged[i][j] = true;
@@ -132,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
                     flagsView.setText(flags.toString());
                 }
             }
-            else if(flagged[i][j]){
-                // do nothing
-            }
-            else{
-//                tv.setText(((Integer) adjs[i][j]).toString());
+            else if(!flagged[i][j]){
                 reveal(i,j);
+            }
+            if(revealedNum >= (NUM_ROWS*NUM_COLS)-MAX_BOMBS){
+                gameOver = true;
+                playerWon = true;
             }
         }
     }
@@ -151,6 +162,21 @@ public class MainActivity extends AppCompatActivity {
         else{
             btn.setText(PICK);
         }
+    }
+
+    private void runTimer(){
+        final TextView timeView = (TextView) findViewById(R.id.timeView);
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                timeView.setText(time.toString());
+                if(!gameOver){
+                    time++;
+                }
+                handler.postDelayed(this, 1000);
+            }
+        });
     }
 
     protected int getBomb(int i, int j){
@@ -170,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
             revealed[i][j] = true;
             TextView tv = tiles[i][j];
             if (bombs[i][j]) {
-                tv.setBackgroundColor(0x808080);
+                tv.setBackgroundColor(Color.GRAY);
                 tv.setText(MINE);
                 if (!gameOver) {
                     gameOver = true;
@@ -183,12 +209,13 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 int adj = adjs[i][j];
                 tv.setText(((Integer) adj).toString());
+                if(!gameOver){
+                    revealedNum++; // don't increment when the player has lost
+                }
                 if (adj == 0) {
                     for(int x = -1; x <= 1; ++x){
                         for(int y = -1; y <= 1; ++y){
-                            if(x != 0 || y != 0){
-                                reveal(i+x, j+y);
-                            }
+                            reveal(i+x, j+y);
                         }
                     }
                 }
