@@ -9,6 +9,7 @@
     android:layout_marginBottom="2dp"
     android:height="32dp"
     android:width="32dp"
-    android:textSize="16sp"
+    android:textSize="16dp"
+    android:layout_centerVertical="true"
     android:background="#ff00ff00"
     android:textAlignment="center" />

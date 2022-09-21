@@ -6,16 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp" >
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:text="@string/flag"
+            android:textSize="12pt"
+            />
+        <TextView
+            android:id="@+id/flagsView"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:text="4"
+            android:textSize="12pt"
+            />
+
+        <TextView
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:text="@string/clock"
+            android:textSize="12pt" />
+
+        <TextView
+            android:id="@+id/timeView"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:textSize="12pt"
+            />
+
+        </LinearLayout>
+
     <GridLayout
         android:id="@+id/gridLayout01"
         android:layout_width="292dp"
         android:layout_height="512dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="108dp"
         android:layout_gravity="center"
+        android:layout_marginTop="108dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/mode"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/pick"
+        android:textSize="14pt" />
 
 </RelativeLayout>
